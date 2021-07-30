@@ -1,7 +1,8 @@
 # hioctane
 Hi-Octane port in C
 
-addition of maps.crc
+new map list format using simple checksum 
+with additional comment line as name
 
 create maps.crc:
 
