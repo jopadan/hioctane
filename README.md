@@ -1,6 +1,20 @@
 # hioctane
 Hi-Octane port in C
 
+# Dependencies
+- libzip http://github.com/nih-at/libzip/
+- libcrc http://github.com/jopadan/libcrc/
+
+# Building
+
+```c
+cmake .
+make
+make install
+```
+
+# Status
+
 new map list format using simple checksum 
 with additional comment line as name
 
