@@ -5,12 +5,14 @@ addition of maps.crc
 
 create maps.crc:
 
-```cd data && rhash -C -simple ```c
+```c
+cd data && rhash -C -simple maps/*
+```
 
-add map name as a comment beginning with
+add map name as a comment beginning with:
 
-```; <name>```c
+```c
+; <name>
+```
 
 after the line following the checksum and file
-
-
