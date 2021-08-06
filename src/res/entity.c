@@ -1,5 +1,11 @@
 #include "entity.h"
 
+const char* entity_type_string[ENTITY_TYPE_SIZE] = { "Unknown", "Unknown Shield", "Unknown Item", "Extra Shield", "Shield Full", "Double Shield",
+                                                      "Extra Ammo", "Ammo Full", "Double Ammo", "Extra Fuel", "Fuel Full", "Double Fuel", "Minigun Upgrade",
+                                                      "Missile Upgrade", "Booster Upgrade", "Wall Segment", "Waypoint Fuel", "Waypoint Ammo", "Waypoint Shield", "Waypoint Special1",
+                                                      "Waypoint Special2", "Waypoint Special3", "Waypoint Fast", "Waypoint Slow", "Waypoint Shortcut", "Revovery Truck",
+                                                      "Steam Strong", "Steam Light", "Entity Cone", "Checkpoint", "Morph Source1", "Morph Source2", "Morph Once", "Morph Permanent",
+                                                      "Trigger Craft", "Trigger Timed", "Trigger Rocket", "Damage Craft", "Explosion", "Explosion Particales" };
 entity_type_t entity_identify(entity_t* entity)
 {
 	if(entity->type == 1 && entity->subtype == 5) return ENTITY_CHECKPOINT;
@@ -51,4 +57,24 @@ entity_type_t entity_identify(entity_t* entity)
 	if(entity->type == 10 && entity->subtype == 9) return ENTITY_RECOVERY_TRUCK;
 
 	return ENTITY_UNKNOWN;
+}
+
+bool entity_print(entity_t* entity)
+{
+	int type = entity_identify(entity);
+
+/*
+	if(entity->type == 0 && entity->subtype == 0 && entity->group == 0 && entity->target_group == 0 && entity->unknown[0] == 0 && entity->next_id == 0 && entity->value == 0 && entity->x == 0 && entity->z == 0 && entity->offset_x == 0 && entity->offset_y == 0);
+	{
+		return false;
+	}
+*/
+	printf("\n");
+	printf("%s\n", entity_type_string[type]);
+
+	printf("\n");
+	printf("type: %u\nsubtype: %u\ntarget: %d\ntarget_group: %d\nunknown[0]: %u\nunknown[1]: %u\nunknown[2]: %u\nunknown[3]: %u\nunknown[4]: %u\nunknown[5]: %u\nnext_id: %d\nvalue: %d\n: %f\nz: %f\noffset_x: %f\noffset_y: %f\n", entity->type, entity->subtype, entity->group, entity->target_group, entity->unknown[0], entity->unknown[1], entity->unknown[2], entity->unknown[3], entity->unknown[4], entity->unknown[5], entity->next_id, entity->value, fixed2float(entity->x), fixed2float(entity->z), fixed2float(entity->offset_x), fixed2float(entity->offset_y));
+
+
+	return true;
 }

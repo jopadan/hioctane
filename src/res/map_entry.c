@@ -1,4 +1,13 @@
 #include "map_entry.h"
+bool map_entry_print(map_entry_t* entry)
+{
+	if(entry == NULL)
+		return false;
+
+	printf("\nunknown1[0]: %u\nunknown1[1]: %u\nheight: %f\ntexid: %d\nunknown2[0]: %u\nunknown2[1]: %u\nunknown2[2]: %u\ntexmod: %d\n",
+		entry->unknown1[0], entry->unknown1[1], fixed2float(entry->height), entry->texid, entry->unknown2[0], entry->unknown2[1], entry->unknown2[2], entry->texmod);
+	return true;
+}
 
 bool map_entry_destroy(map_entry_t* map_entry)
 {

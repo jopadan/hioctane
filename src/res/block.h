@@ -1,11 +1,12 @@
 #ifndef _BLOCK_H
 #define _BLOCK_H
 
+#include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 #define BLOCKS_COUNT 1024
-
 
 typedef struct block_s
 {
@@ -31,5 +32,7 @@ typedef struct block_s
 		};
 	};
 } block_t;
+
+bool block_print(block_t* block);
 
 #endif

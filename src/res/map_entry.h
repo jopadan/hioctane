@@ -30,6 +30,7 @@ typedef struct map_entry_s
 	};
 } map_entry_t;
 
+bool map_entry_print(map_entry_t* entry);
 
 inline float map_entry_get_height(map_entry_t* map_entry)
 {

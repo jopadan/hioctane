@@ -1,6 +1,12 @@
 #ifndef _ENTITY_H
 #define _ENTITY_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <system_types.h>
+
 #define ENTITIES_COUNT 4000
 
 typedef struct entity_s
@@ -37,9 +43,13 @@ typedef enum entity_type_e
 	ENTITY_MORPH_SOURCE1, ENTITY_MORPH_SOURCE2, ENTITY_MORPH_ONCE, ENTITY_MORPH_PERMANENT,
 	ENTITY_TRIGGER_CRAFT, ENTITY_TRIGGER_TIMED, ENTITY_TRIGGER_ROCKET,
 	ENTITY_DAMAGE_CRAFT,
-	ENTITY_EXPLOSION, ENTITY_EXPLOSION_PARTICLES,
+	ENTITY_EXPLOSION, ENTITY_EXPLOSION_PARTICLES, ENTITY_TYPE_SIZE,
 } entity_type_t;
 
+
+extern const char* entity_type_string[ENTITY_TYPE_SIZE];
+
 entity_type_t entity_identify(entity_t* entity);
+bool entity_print(entity_t* entity);
 
 #endif

@@ -11,8 +11,11 @@ set(SOURCE_FILES
 	#	src/res/entity.c
 	#src/res/block.c
 	src/res/map_entry.c
+	src/res/entity.c
+	src/res/block.c
 	src/res/column.c
 	src/res/level_file.c
+	src/system_types.c
 )
 
 set(INCLUDE_FILES
@@ -40,7 +43,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CRC_INCLUDEDIR} ${ZIP_INCLUD
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/lib${PROJECT_NAME}>
 			)
-target_link_libraries( ${PROJECT_NAME} PUBLIC ${CRC_LIBRARIES} ${ZIP_LIBRARIES} )
+target_link_libraries( ${PROJECT_NAME} PUBLIC ${CRC_LIBRARIES}
+	${ZIP_LIBRARIES} -lm )
 
 
 
