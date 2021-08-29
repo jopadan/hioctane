@@ -54,7 +54,7 @@ bool main_quit()
 bool main_loop()
 {
 	running = true;
-	while(running)
+	if(running)
 	{
 		if(!log_update(logger))
 			return false;

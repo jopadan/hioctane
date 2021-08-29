@@ -1,6 +1,8 @@
 #ifndef _LOG_H
 #define _LOG_H
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
