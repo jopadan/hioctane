@@ -7,14 +7,18 @@
 int main(int argc, char** argv)
 {
 	int exit_status = EXIT_SUCCESS;
+
+	/* load entity config at DATA_DIR/entities.cfg */
 	entity_type_table = entity_type_table_create("entities.cfg");
 	if(entity_type_table == NULL)
 	{
 		exit_status = EXIT_FAILURE;
 		exit(exit_status);
 	}
+	/* print loaded entities to stdout */
 	entity_type_table_print();
 
+	/* load level table config at DATA_DIR/maps.cfg */
 	level_table_t* level_table = level_table_create("maps.cfg");
 	if(level_table == NULL)
 	{
