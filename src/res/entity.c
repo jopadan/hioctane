@@ -37,12 +37,12 @@ char* entity_type_table_print()
 			{
 				char* msg;
 
-				if(asprintf(&msg,"ENTITY: LOADED %.02x/%.02x %.03d - %s", 
+				if(asprintf(&msg,"ENTITY LOADED %.02x/%.02x %.03d - %s", 
 				i, j, 
 				entity_type_table->entries[i][j].type,
 				entity_type_table->entries[i][j].name) == -1)
 				{
-					log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED calling asprintf!");
+					log_queue(logger, LOG_FILES, "ENTITY LOAD FAILED calling asprintf!");
 					log_flush(logger);
 					free(msg);
 					return NULL;
@@ -56,12 +56,12 @@ char* entity_type_table_print()
 			else if(i == 0 && j == 0)
 			{
 				char *msg;
-				if(asprintf(&msg,"ENTITY: LOADED %.02x/%.02x %.03d - %s neutral element",
+				if(asprintf(&msg,"ENTITY LOADED %.02x/%.02x %.03d - %s neutral element",
 						0, 0,
 						entity_type_table->entries[i][j].type,
 						entity_type_table->entries[i][j].name) == -1)
 				{
-					log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED calling asprintf!");
+					log_queue(logger, LOG_FILES, "ENTITY LOAD FAILED calling asprintf!");
 					log_flush(logger);
 					free(msg);
 					return NULL;
