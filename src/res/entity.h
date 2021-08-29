@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <system_types.h>
+#include "log.h"
 
 #define ENTITIES_COUNT 4000
 

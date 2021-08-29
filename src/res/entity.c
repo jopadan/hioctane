@@ -88,13 +88,41 @@ char* entity_type_table_print()
 		for(int j = 0; j < entity_type_table->SUBTYPE_SIZE; j++)
 		{
 			if(entity_type_table->entries[i][j].type != entity_type_table->entries[0][0].type)
-				printf("ENTITY: LOADED %.02x/%.02x %.03d - %s\n", i, j, entity_type_table->entries[i][j].type, entity_type_table->entries[i][j].name);
+			{
+				char* msg;
+
+				if(asprintf(&msg,"ENTITY: LOADED %.02x/%.02x %.03d - %s", 
+				i, j, 
+				entity_type_table->entries[i][j].type,
+				entity_type_table->entries[i][j].name) == -1)
+				{
+					log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED calling asprintf!");
+					log_flush(logger);
+					free(msg);
+					return NULL;
+				}
+
+				log_queue(logger, LOG_FILES, msg);
+				log_flush(logger);
+				free(msg);
+			}
+
 			else if(i == 0 && j == 0)
 			{
-				printf("ENTITY: LOADED %.02x/%.02x %.03d - %s neutral element\n",
+				char *msg;
+				if(asprintf(&msg,"ENTITY: LOADED %.02x/%.02x %.03d - %s neutral element",
 						0, 0,
 						entity_type_table->entries[i][j].type,
-						entity_type_table->entries[i][j].name);
+						entity_type_table->entries[i][j].name) == -1)
+				{
+					log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED calling asprintf!");
+					log_flush(logger);
+					free(msg);
+					return NULL;
+				}
+				log_queue(logger, LOG_FILES, msg);
+				log_flush(logger);
+				free(msg);
 			}
 		}
 	}
@@ -251,7 +279,8 @@ entity_type_table_t* entity_type_table_create(char* entity_info_file)
 	{
 		if(getline(&name_line, &name_length, file) == -1)
 		{
-			fprintf(stderr, "ENTITY: LOAD FAILED at getline!\n");
+			log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED at getline!");
+			log_flush(logger);
 			entity_type_table_destroy(entities);
 			entities = NULL;
 			break;
@@ -259,7 +288,8 @@ entity_type_table_t* entity_type_table_create(char* entity_info_file)
 
 		if(!entity_type_table_insert(entities, line, name_line))
 		{
-			fprintf(stderr,"ENTITY: LOAD FAILED at entity_type_table_insert failed!\n");
+			log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED at entity_type_table_insert failed!");
+			log_flush(logger);
 			entity_type_table_destroy(entities);
 			entities = NULL;
 			break;

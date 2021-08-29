@@ -126,7 +126,17 @@ map_file_t* map_file_create(map_header_t* header)
 		fprintf(stderr, "MAP: LOAD FAILED with checkum verification of %s %.8X/%.8X!\n", header->filename, header->checksum, checksum);
 		return NULL;
 	}
-	fprintf(stdout, "MAP: LOADED %s %.8X/%.8X %s\n", header->filename,header->checksum, checksum, header->name);
+	char* msg;
+	if(asprintf(&msg,"MAP: LOADED %s %.8X/%.8X %s", header->filename,header->checksum, checksum, header->name) == -1)
+	{
+		log_queue(logger, LOG_FILES, "ENTITY: LOAD FAILED calling asprintf!");
+		log_flush(logger);
+		free(msg);
+		return NULL;
+	}
+	log_queue(logger, LOG_FILES, msg);
+	log_flush(logger);
+	free(msg);
 	return map_file;
 }
 

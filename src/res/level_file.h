@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <checksum.h>
-
+#include "log.h"
 #include "map_entry.h"
 #include "entity.h"
 #include "column.h"

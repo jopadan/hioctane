@@ -16,6 +16,7 @@ set(SOURCE_FILES
 	src/res/column.c
 	src/res/level_file.c
 	src/system_types.c
+	src/log.c
 )
 
 set(INCLUDE_FILES
@@ -25,6 +26,7 @@ set(INCLUDE_FILES
 	src/res/block.h
 	src/res/column.h
 	src/res/level_file.h
+	src/log.h
 )
 
 set(EXAMPLE_SOURCE_FILES
