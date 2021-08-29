@@ -64,7 +64,7 @@ entity_type_t entity_identify(entity_t* entity)
 	return entity_type_table->entries[entity->type][entity->subtype].type;
 }
 
-char* entity_name(entity_type_t id)
+const char* entity_name(entity_type_t id)
 {
 	for(int i = 0; i < entity_type_table->TYPE_SIZE; i++)
 	{

@@ -39,7 +39,7 @@ required header information to create entities.cfg:
 <hexadecimal type size> <hexadecimal subtype size>
 ; types count / subtypes count
 <hexadecimal type> <hexadecimal subtype> <decimal enum int id>
-; Unknown neutral element
+; Unknown Zero
 ```
 
 for every entity
