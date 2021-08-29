@@ -123,15 +123,16 @@ map_file_t* map_file_create(map_header_t* header)
 	if((checksum = crc_32(map_file->data, MAP_FILE_SIZE)) != header->checksum)
 	{
 		free(map_file);
-		fprintf(stderr, "ERROR: checkum verification of %s %.8X/%.8X FAILED!\n", header->filename, header->checksum, checksum);
+		fprintf(stderr, "MAP: LOAD FAILED with checkum verification of %s %.8X/%.8X!\n", header->filename, header->checksum, checksum);
 		return NULL;
 	}
-	fprintf(stdout, "MAP LOADED: %s %.8X/%.8X %s\n", header->filename,header->checksum, checksum, header->name);
+	fprintf(stdout, "MAP: LOADED %s %.8X/%.8X %s\n", header->filename,header->checksum, checksum, header->name);
 	return map_file;
 }
 
 level_table_t* level_table_create(char* level_info_file)
 {
+	fprintf(stdout, "\n");
 	level_table_t* levels = calloc(1, sizeof(level_table_t));
 	if(levels == NULL)
 	{

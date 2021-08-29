@@ -6,10 +6,25 @@
 
 int main(int argc, char** argv)
 {
-	level_table_t* level_table = level_table_create("maps.crc");
+	int exit_status = EXIT_SUCCESS;
+	entity_type_table = entity_type_table_create("entities.cfg");
+	if(entity_type_table == NULL)
+	{
+		exit_status = EXIT_FAILURE;
+		exit(exit_status);
+	}
+	entity_type_table_print();
+
+	level_table_t* level_table = level_table_create("maps.cfg");
+	if(level_table == NULL)
+	{
+		exit_status = EXIT_FAILURE;
+		exit(exit_status);
+	}
 
 	for(int i=0; i< level_table->num_maps; i++)
 	{
+	/*
 		for(int j=0; j < ENTITIES_COUNT; j++)
 			entity_print(&level_table->files[i]->entities[j]);
 		for(int j=0; j < BLOCKS_COUNT; j++)
@@ -19,8 +34,18 @@ int main(int argc, char** argv)
 		for(int j=0; j < MAP_WIDTH; j++)
 			for(int k=0; k < MAP_HEIGHT; k++)
 				map_entry_print(&level_table->files[i]->map_entries[j*k]);
+	*/
 	}
-
-	level_table_destroy(level_table);
-	exit(EXIT_SUCCESS);
+	
+	if(!level_table_destroy(level_table))
+	{
+		perror("error destroying level_table!");
+		exit_status = EXIT_FAILURE;
+	}
+	if(!entity_type_table_destroy(entity_type_table))
+	{
+		perror("error destroying entity_type_table!");
+		exit_status = EXIT_FAILURE;
+	}
+	exit(exit_status);
 }
