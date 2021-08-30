@@ -8,13 +8,12 @@ include(GNUInstallDirs)
 include(FindPkgConfig)
 
 set(SOURCE_FILES
-	#	src/res/entity.c
-	#src/res/block.c
 	src/res/map_entry.c
 	src/res/entity.c
 	src/res/block.c
 	src/res/column.c
 	src/res/level_file.c
+	src/res/model_file.c
 	src/system_types.c
 	src/log.c
 )
@@ -26,6 +25,7 @@ set(INCLUDE_FILES
 	src/res/block.h
 	src/res/column.h
 	src/res/level_file.h
+	src/res/model_file.h
 	src/log.h
 )
 
