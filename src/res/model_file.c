@@ -131,17 +131,20 @@ exit_texture_create:
 
 model_file_t* model_file_create(uint32_t checksum, char* filename, char* name)
 {
+	struct stat sb;
+	char* line;
+	size_t line_length;
 	model_file_t* model = calloc(1, sizeof(model_file_t));
 	model->checksum = checksum;
 	model->filename = strdup(filename);
 	model->name = strdup(name);
-	struct stat sb;
-	if(!stat(filename, &sb))
+
+	if(!stat(filename, &sb) && sb.st_size < 0)
 	{
 		return NULL;
 	}
+
 	FILE* file = fopen(filename, "r");
-	fread(file, sb.st_size);
 	mesh_t* mesh = calloc(1, sizeof(mesh_t));
 
 	/* count entries and allocate enought space */
@@ -159,12 +162,12 @@ model_file_t* model_file_create(uint32_t checksum, char* filename, char* name)
 			mesh->num_faces++;
 	}
 
-	frewind(file);
+	rewind(file);
 	mesh->vertices = calloc(mesh->num_vertices, sizeof(vec4));
 	mesh->texcoords = calloc(mesh->num_texcoords, sizeof(vec2));
 	mesh->normals = calloc(mesh->num_normals, sizeof(vec3));
-	mesh->indices = calloc(mesh->num_faces, face_verts[mesh->face_type] * sizeof(mesh->vert_type);
-	mesh->face_normals = calloc(mesh->num_faces, sizeof(vec3);
+	mesh->indices = calloc(mesh->num_faces, face_verts[mesh->face_type] * sizeof(mesh->index_type));
+	mesh->face_normals = calloc(mesh->num_faces, sizeof(vec3));
 
 	GLsizei g,n,t,v,f = 0;
 	while(getline(&line, &line_length, file) != -1)
@@ -192,7 +195,7 @@ model_file_t* model_file_create(uint32_t checksum, char* filename, char* name)
 						break;
 					/* vertex */
 					case ' ':
-						sscanf(&line[2], "%f %f %f", &mesh->vertices[v][0], &mesh->vertices[v][1], &vertices[v][2]);
+						sscanf(&line[2], "%f %f %f", &mesh->vertices[v][0], &mesh->vertices[v][1], &mesh->vertices[v][2]);
 						mesh->vertices[v][3] = 1.0f;
 						v++;
 						break;
@@ -203,15 +206,15 @@ model_file_t* model_file_create(uint32_t checksum, char* filename, char* name)
 			/* face */
 			case 'f':
 				sscanf(&line[2], "%d/%d/%d %d/%d/%d %d/%d/%d", 
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 0],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 1],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 2],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 3],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 4],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 5],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 6],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 7],
-				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->vert_type) + 8]);
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 0],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 1],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 2],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 3],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 4],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 5],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 6],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 7],
+				&mesh->indices[f * face_verts[mesh->face_type] * sizeof(mesh->index_type) + 8]);
 				f++;
 				break;
 			default:

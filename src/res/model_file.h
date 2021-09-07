@@ -65,6 +65,10 @@ typedef struct texture_s
 
 GLsizei face_verts[10] = { 1, 2, 2, 2, 3, 3, 3, 4, 4, 0 };
 
+typedef GLsizei index_t;
+typedef GLfloat scalar_t;
+typedef vec4    vector_t;
+
 typedef struct mesh_s
 {
 	GLsizei num_vertices;
@@ -74,8 +78,10 @@ typedef struct mesh_s
 	GLsizei num_texcoords;
 	vec4* texcoords;
 	GLsizei num_faces;
-	int     face_type;
-	GLsizei* indices;
+	int face_type;
+	scalar_t scalar_type;
+	index_t index_type;
+	index_t* indices;
 	vec3* face_normals;
 } mesh_t;
 
