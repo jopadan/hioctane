@@ -9,6 +9,8 @@
 #include <math.h>
 #include <unistd.h>
 #include <cglm/cglm.h>
+#include <GL/gl.h>
+#include <GL/glcorearb.h>
 
 #define DATA_DIR "data/"
 

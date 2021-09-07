@@ -4,11 +4,13 @@
 #include "system_types.h"
 #include "log.h"
 #include "res/level_file.h"
+#include "res/model_file.h"
 
 log_t* logger = NULL;
 bool running = false;
 int exit_status = EXIT_SUCCESS;
 level_table_t* level_table = NULL;
+model_table_t* model_table = NULL;
 
 bool main_init()
 {
@@ -18,9 +20,10 @@ bool main_init()
 	entity_type_table = entity_type_table_create("entities.cfg");
 	if(entity_type_table == NULL)
 	{
+		log_queue(logger, LOG_FILES, "error creating entity_type_table!");
 		exit_status = EXIT_FAILURE;
-		exit(exit_status);
 	}
+
 	/* print loaded entities to stdout */
 	entity_type_table_print();
 
@@ -28,9 +31,18 @@ bool main_init()
 	level_table = level_table_create("maps.cfg");
 	if(level_table == NULL)
 	{
+		log_queue(logger, LOG_FILES, "error creating level_table!");
 		exit_status = EXIT_FAILURE;
-		exit(exit_status);
 	}
+
+	model_table = model_table_create("models.cfg");
+	if(model_table == NULL)
+	{
+		log_queue(logger, LOG_FILES, "error creating model_table!");
+		exit_status = EXIT_FAILURE;
+	}
+	log_flush(logger);
+	log_destroy(logger);
 	return exit_status == EXIT_SUCCESS ? true : false;
 }
 
@@ -44,6 +56,11 @@ bool main_quit()
 	if(!entity_type_table_destroy(entity_type_table))
 	{
 		log_queue(logger, LOG_FILES, "error destroying entity_type_table!");
+		exit_status = EXIT_FAILURE;
+	}
+	if(!model_table_destroy(model_table))
+	{
+		log_queue(logger, LOG_FILES, "error destroying model_table!");
 		exit_status = EXIT_FAILURE;
 	}
 	log_flush(logger);
