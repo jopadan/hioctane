@@ -8,9 +8,14 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <errno.h>
 #include <cglm/cglm.h>
 #include <GL/gl.h>
 #include <GL/glcorearb.h>
+#include <checksum.h>
+#include "log.h"
+#include "obj.h"
 
 #define DATA_DIR "data/"
 

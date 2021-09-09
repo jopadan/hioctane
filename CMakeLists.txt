@@ -13,9 +13,10 @@ set(SOURCE_FILES
 	src/res/block.c
 	src/res/column.c
 	src/res/level_file.c
-	src/res/model_file.c
+	src/res/model.c
 	src/system_types.c
-	src/log.c
+	external/log/log.c
+	external/obj/obj.c
 )
 
 set(INCLUDE_FILES
@@ -25,8 +26,10 @@ set(INCLUDE_FILES
 	src/res/block.h
 	src/res/column.h
 	src/res/level_file.h
-	src/res/model_file.h
-	src/log.h
+	src/res/model.h
+	external/log/log.h
+	external/obj/obj.h
+	external/libcrc/include/checksum.h
 )
 
 set(EXAMPLE_SOURCE_FILES
@@ -34,19 +37,23 @@ set(EXAMPLE_SOURCE_FILES
 )
 
 pkg_search_module(ZIP REQUIRED libzip)
-pkg_search_module(CRC REQUIRED libcrc)
+pkg_search_module(GLEW REQUIRED glew)
 
 add_executable( ${PROJECT_NAME} ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES}
-	${INCLUDE_FILES} ${CRC_INCLUDE} ${ZIP_INCLUDE})
+	${INCLUDE_FILES} ${CRC_INCLUDE} ${ZIP_INCLUDE} ${GLEW_INCLUDE})
 
 target_compile_options(${PROJECT_NAME} PUBLIC ${CRC_CFLAGS} ${ZIP_CFLAGS}
 	-D_GNU_SOURCE)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CRC_INCLUDEDIR} ${ZIP_INCLUDEDIR}
+target_include_directories(${PROJECT_NAME} PUBLIC ${CRC_INCLUDEDIR}
+	${ZIP_INCLUDEDIR} ${GLEW_INCLUDEDIR}
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/obj/>
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/log/>
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/libcrc/include>
 			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/lib${PROJECT_NAME}>
 			)
 target_link_libraries( ${PROJECT_NAME} PUBLIC ${CRC_LIBRARIES}
-	${ZIP_LIBRARIES} -lm )
+	${ZIP_LIBRARIES} ${GLEW_LIBRARIES} -lm )
 
 
 

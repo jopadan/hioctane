@@ -4,7 +4,7 @@
 #include "system_types.h"
 #include "log.h"
 #include "res/level_file.h"
-#include "res/model_file.h"
+#include "res/model.h"
 
 log_t* logger = NULL;
 bool running = false;
@@ -27,6 +27,13 @@ bool main_init()
 	/* print loaded entities to stdout */
 	entity_type_table_print();
 
+	model_table = model_table_create("models.cfg");
+	if(model_table == NULL)
+	{
+		log_queue(logger, LOG_FILES, "error creating model_table!");
+		exit_status = EXIT_FAILURE;
+	}
+
 	/* load level table config at DATA_DIR/maps.cfg */
 	level_table = level_table_create("maps.cfg");
 	if(level_table == NULL)
@@ -35,36 +42,32 @@ bool main_init()
 		exit_status = EXIT_FAILURE;
 	}
 
-	model_table = model_table_create("models.cfg");
-	if(model_table == NULL)
-	{
-		log_queue(logger, LOG_FILES, "error creating model_table!");
-		exit_status = EXIT_FAILURE;
-	}
 	log_flush(logger);
-	log_destroy(logger);
 	return exit_status == EXIT_SUCCESS ? true : false;
 }
 
 bool main_quit()
 {
-	if(!level_table_destroy(level_table))
+	if(level_table && !level_table_destroy(level_table))
 	{
 		log_queue(logger, LOG_FILES, "error destroying level_table!");
 		exit_status = EXIT_FAILURE;
 	}
-	if(!entity_type_table_destroy(entity_type_table))
-	{
-		log_queue(logger, LOG_FILES, "error destroying entity_type_table!");
-		exit_status = EXIT_FAILURE;
-	}
-	if(!model_table_destroy(model_table))
+	if(model_table && (model_table_destroy(model_table) != NULL))
 	{
 		log_queue(logger, LOG_FILES, "error destroying model_table!");
 		exit_status = EXIT_FAILURE;
 	}
-	log_flush(logger);
-	log_destroy(logger);
+	if(entity_type_table && !entity_type_table_destroy(entity_type_table))
+	{
+		log_queue(logger, LOG_FILES, "error destroying entity_type_table!");
+		exit_status = EXIT_FAILURE;
+	}
+	if(logger)
+	{
+		log_flush(logger);
+		log_destroy(logger);
+	}
 	return exit_status == EXIT_SUCCESS ? true : false;
 }
 
@@ -83,7 +86,6 @@ int main(int argc, char** argv)
 {
 	if(!main_init())
 		exit(exit_status);
-
 	if(!main_loop())
 		exit_status = EXIT_FAILURE;
 
