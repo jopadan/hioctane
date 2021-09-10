@@ -10,7 +10,9 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <assert.h>
 #include <cglm/cglm.h>
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glcorearb.h>
 #include <checksum.h>

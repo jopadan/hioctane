@@ -91,20 +91,27 @@ model_t* model_create(FILE* file)
 
 		/* verify checksum */
 		model->data = calloc(model->size, sizeof(uint8_t));
-		FILE* entry = fopen(filename, "r");
-		if(entry == NULL || fread(model->data, sizeof(uint8_t), model->size, entry) != model->size) 
+		FILE* entry = fopen(model->filename, "r");
+		if(entry != NULL && 
+		  (model->size = fread(model->data, sizeof(uint8_t), model->size, entry)) == model->size && 
+		  fclose(entry) == 0 && ((model->checksum = crc_32(model->data, model->size)) == checksum))
+
 		{
-			asprintf(&msg, "MODEL CONFIG LOAD FAILED %08X/%08X %s %s", model->checksum, checksum, filename, name);
+			asprintf(&msg, "MODEL LOADED %s %08X/%08X %s", model->filename, model->checksum, checksum, model->name);
+			/*
+			 * model->obj = obj_create(model->filename);
+			else
+			{
+				asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
+				model = model_destroy(model);
+			}
+			*/
+		}
+		else
+		{
+			asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
 			model = model_destroy(model);
 		}
-		fclose(entry);
-
-		if(checksum = crc_32(model->data, model->size)) != model->checksum)
-
-		if((model != NULL) && ((model->obj = obj_create(filename)) != NULL))
-			asprintf(&msg, "MODEL LOADED %s %08X/%08X %s", model->filename, model->checksum, checksum, model->name);
-		else
-			asprintf(&msg, "MODEL LOAD FAILED %08X %s %s", checksum, filename, name);
 	}
 	else
 	{
