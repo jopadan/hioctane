@@ -2,6 +2,7 @@
 #define _MODEL_H
 
 #include "system_types.h"
+
 typedef GLsizei index_t;
 typedef GLfloat scalar_t;
 typedef vec4    vector_t;

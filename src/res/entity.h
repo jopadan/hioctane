@@ -1,12 +1,7 @@
 #ifndef _ENTITY_H
 #define _ENTITY_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
 #include <system_types.h>
-#include "log.h"
 
 #define ENTITIES_COUNT 4000
 

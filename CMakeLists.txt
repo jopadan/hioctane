@@ -17,6 +17,7 @@ set(SOURCE_FILES
 	src/system_types.c
 	external/log/log.c
 	external/obj/obj.c
+	external/crc/crc.c
 )
 
 set(INCLUDE_FILES
@@ -29,7 +30,7 @@ set(INCLUDE_FILES
 	src/res/model.h
 	external/log/log.h
 	external/obj/obj.h
-	external/libcrc/include/checksum.h
+	external/crc/crc.h
 )
 
 set(EXAMPLE_SOURCE_FILES
@@ -40,20 +41,17 @@ pkg_search_module(ZIP REQUIRED libzip)
 pkg_search_module(GLEW REQUIRED glew)
 
 add_executable( ${PROJECT_NAME} ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES}
-	${INCLUDE_FILES} ${CRC_INCLUDE} ${ZIP_INCLUDE} ${GLEW_INCLUDE})
+	${INCLUDE_FILES}  ${ZIP_INCLUDE} ${GLEW_INCLUDE})
 
-target_compile_options(${PROJECT_NAME} PUBLIC ${CRC_CFLAGS} ${ZIP_CFLAGS}
-	-D_GNU_SOURCE)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CRC_INCLUDEDIR}
-	${ZIP_INCLUDEDIR} ${GLEW_INCLUDEDIR}
+target_compile_options(${PROJECT_NAME} PUBLIC ${ZIP_CFLAGS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${ZIP_INCLUDEDIR} ${GLEW_INCLUDEDIR}
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/obj/>
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/log/>
-			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/libcrc/include>
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/crc/>
 			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/lib${PROJECT_NAME}>
 			)
-target_link_libraries( ${PROJECT_NAME} PUBLIC ${CRC_LIBRARIES}
-	${ZIP_LIBRARIES} ${GLEW_LIBRARIES} -lm )
+target_link_libraries( ${PROJECT_NAME} PUBLIC ${ZIP_LIBRARIES} ${GLEW_LIBRARIES} -lm )
 
 
 

@@ -1,14 +1,7 @@
 #ifndef _LEVEL_FILE_H
 #define _LEVEL_FILE_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <checksum.h>
-#include "log.h"
+#include "system_types.h"
 #include "map_entry.h"
 #include "entity.h"
 #include "column.h"

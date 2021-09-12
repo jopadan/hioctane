@@ -1,6 +1,7 @@
 #ifndef _SYSTEM_TYPES_H
 #define _SYSTEM_TYPES_H
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -15,9 +16,12 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glcorearb.h>
-#include <checksum.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "log.h"
 #include "obj.h"
+#include "crc.h"
 
 #define DATA_DIR "data/"
 

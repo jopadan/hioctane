@@ -9,6 +9,7 @@ include(GNUInstallDirs)
 include(FindPkgConfig)
 
 set(SOURCE_FILES
+	crc.c
 )
 
 set(INCLUDE_FILES
@@ -16,10 +17,11 @@ set(INCLUDE_FILES
 )
 
 set(EXAMPLE_SOURCE_FILES
-	crc.c
+	crcle.c
 )
 
-add_executable( ${PROJECT_NAME} ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES} ${INCLUDE_FILES})
+add_library( ${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
+add_executable( crcle ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES} ${INCLUDE_FILES})
 
 set(install_prefix "${CMAKE_INSTALL_PREFIX}")
 set(install_libdir "${CMAKE_INSTALL_LIBDIR}")

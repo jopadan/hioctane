@@ -94,7 +94,7 @@ model_t* model_create(FILE* file)
 		FILE* entry = fopen(model->filename, "r");
 		if(entry != NULL && 
 		  (model->size = fread(model->data, sizeof(uint8_t), model->size, entry)) == model->size && 
-		  fclose(entry) == 0 && ((model->checksum = crc_32(model->data, model->size)) == checksum))
+		  fclose(entry) == 0 && ((model->checksum = crc32(CRC_CRC32, CRC_START_32, model->data, model->size)) == checksum))
 
 		{
 			asprintf(&msg, "MODEL LOADED %s %08X/%08X %s", model->filename, model->checksum, checksum, model->name);

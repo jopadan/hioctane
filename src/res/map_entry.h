@@ -4,7 +4,6 @@
 #include "system_types.h"
 #include "column.h"
 #include "map_entry.h"
-#include <cglm/cglm.h>
 
 #define MAP_WIDTH 256
 #define MAP_HEIGHT 160

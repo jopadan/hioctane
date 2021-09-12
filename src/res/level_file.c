@@ -121,7 +121,7 @@ map_file_t* map_file_create(map_header_t* header)
 	/* verify checksum of map */
 	uint32_t checksum = 0;
 	char* msg;
-	if((checksum = crc_32(map_file->data, MAP_FILE_SIZE)) != header->checksum)
+	if((checksum = crc32(CRC_CRC32, CRC_START_32, map_file->data, MAP_FILE_SIZE)) != header->checksum)
 	{
 		free(map_file);
 		if(asprintf(&msg,"MAP LOAD FAILED with checksum verification of %s %.8X/%.8X %s", header->filename,header->checksum, checksum, header->name) == -1)

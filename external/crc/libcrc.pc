@@ -1,0 +1,12 @@
+prefix=/usr/local
+exe_prefix=${prefix}
+libdir=${prefix}/lib64
+includedir=${prefix}/include
+
+Name: libcrc
+Description: POD game archive format library written in C for all existing versions
+Version: 1.0
+
+Requires:
+Libs: -L${libdir}
+Cflags: -I${includedir} -I${includedir}
