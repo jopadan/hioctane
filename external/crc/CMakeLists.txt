@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.0)
+
+project(crc LANGUAGES C)
+
+set(PROJECT_VERSION 1.0)
+set(PROJECT_DESCRIPTION "POD game archive format library written in C for all existing versions")
+
+include(GNUInstallDirs)
+include(FindPkgConfig)
+
+set(SOURCE_FILES
+)
+
+set(INCLUDE_FILES
+	crc.h
+)
+
+set(EXAMPLE_SOURCE_FILES
+	crc.c
+)
+
+add_executable( ${PROJECT_NAME} ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES} ${INCLUDE_FILES})
+
+set(install_prefix "${CMAKE_INSTALL_PREFIX}")
+set(install_libdir "${CMAKE_INSTALL_LIBDIR}")
+set(install_includedir "${CMAKE_INSTALL_INCLUDEDIR}")
+
+configure_file(lib${PROJECT_NAME}.pc.in ${PROJECT_BINARY_DIR}/lib${PROJECT_NAME}.pc @ONLY)
+
+set(ENV{PKG_CONFIG_PATH} "${PROJECT_BINARY_DIR}:$ENV{PKG_CONFIG_PATH}")
+
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Config
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+	PUBLIC_HEADER DESTINATION
+	${CMAKE_INSTALL_INCLUDEDIR}/lib${PROJECT_NAME}
+	)
+
+install(FILES ${INCLUDE_FILES} DESTINATION
+	${CMAKE_INSTALL_INCLUDEDIR}/lib${PROJECT_NAME}/)
+
+install(FILES lib${PROJECT_NAME}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig/)

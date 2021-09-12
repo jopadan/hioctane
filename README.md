@@ -3,8 +3,8 @@ Hi-Octane port in C
 
 # Dependencies
 - [libzip] (http://github.com/nih-at/libzip/)
-- [libcrc] (http://github.com/jopadan/libcrc/)
 - [obj] (http://github.com/rlk/obj/)
+- [crc] (http://github.com/jopadan/crc)
 
 # Building
 
