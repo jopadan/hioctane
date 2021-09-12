@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(crc LANGUAGES C)
+project(crcle LANGUAGES C)
 
 set(PROJECT_VERSION 1.0)
-set(PROJECT_DESCRIPTION "POD game archive format library written in C for all existing versions")
+set(PROJECT_DESCRIPTION "CRC32/CRC32C/CCITT32/ZIP checksum variants C library")
 
 include(GNUInstallDirs)
 include(FindPkgConfig)
@@ -21,7 +21,7 @@ set(EXAMPLE_SOURCE_FILES
 )
 
 add_library( ${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
-add_executable( crcle ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES} ${INCLUDE_FILES})
+add_executable( chkcrc ${EXAMPLE_SOURCE_FILES} ${SOURCE_FILES} ${INCLUDE_FILES})
 
 set(install_prefix "${CMAKE_INSTALL_PREFIX}")
 set(install_libdir "${CMAKE_INSTALL_LIBDIR}")
@@ -31,7 +31,7 @@ configure_file(lib${PROJECT_NAME}.pc.in ${PROJECT_BINARY_DIR}/lib${PROJECT_NAME}
 
 set(ENV{PKG_CONFIG_PATH} "${PROJECT_BINARY_DIR}:$ENV{PKG_CONFIG_PATH}")
 
-install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Config
+install(TARGETS ${PROJECT_NAME} chkcrc EXPORT ${PROJECT_NAME}Config
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
