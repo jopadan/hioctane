@@ -1,14 +1,20 @@
-# crc
+# libcrcle
 
-CRC checksum single header library supporting 32-bit variants used
+CRC checksum library supporting 32-bit variants used
 in Bullfrog and Terminal Reality assets.
+
+based on source code from:
+
+- [macutils](http://github.com/dgilman/macutils)
+- [rhash](http://github.com/rhash/RHash)
 
 # Status
 
-Bullfrog Hi-Octane      : CRC32       - edb88320 - ffffffff
-                        : CRC32C      - 
-Terminal Reality Engines: CRC-CCITT32 - 04c11db7 - ffffffff
-			: ZIP         - edb88320 - ffffffff
+CRC32                   : CRC32       - 0xedb88320 - 0xffffffff
+CRC32C                  : CRC32C      - 0x82f63b78 - 0xffffffff
+CRC-CCITT32             : CRC-CCITT32 - 0x04c11db7 - 0xffffffff
+ZIP     		: ZIP         - 0xedb88320 - 0xffffffff
+
 # Build
 
 ```c
@@ -17,7 +23,7 @@ make install
 ```
 
 # Usage
-crc [OPTION]... [FILE]...
+crcchk [OPTION]... [FILE]...
 Output CRC checksum file of listed files in option defined style.
 
       --crc32           use CRC32 algorithm
