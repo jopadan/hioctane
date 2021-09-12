@@ -79,39 +79,42 @@ model_t* model_create(FILE* file)
 
 	/* parse model line entry */
 	if((filename_size = getline(&line, &line_size, file)) != -1 &&
-	   (name_size = getline(&name_line, &name_line_size, file)) != -1 &&
-	   sscanf(&line[0],"%08x  %s\n", &checksum, filename) &&
-	   (name_line[0] == ';') && (name_line[1] == ' '))
+	   (name_size = getline(&name_line, &name_line_size, file)) != -1)
 	{
+		sscanf(&line[0],"%08x  %s\n", &model->checksum, filename);
+		sscanf(&name_line[0], "; %s\n", name);
 		memcpy(name, &name_line[2], name_size - 2);
-		model->size = sb.st_size;
-		model->checksum = checksum;
 		model->filename = strdup(filename);
 		model->name = strdup(name);
-
+		if(model->name[strlen(model->name) - 1] == '\n')
+			model->name[strlen(model->name) -1] = '\0';
+		if(stat(model->filename, &sb) != 0)
+		{
+			asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
+			model = model_destroy(model);
+		}
+		model->size = sb.st_size;
 		/* verify checksum */
 		model->data = calloc(model->size, sizeof(uint8_t));
 		FILE* entry = fopen(model->filename, "r");
-		if(entry != NULL && 
-		  (model->size = fread(model->data, sizeof(uint8_t), model->size, entry)) == model->size && 
-		  fclose(entry) == 0 && ((model->checksum = crc32(CRC_CRC32, CRC_START_32, model->data, model->size)) == checksum))
-
+		if(entry != NULL && (model->size = fread(model->data, sizeof(uint8_t), model->size, entry)) == sb.st_size && fclose(entry) == 0 && (checksum = crc32(CRC_CRC32, CRC_START_32, model->data, model->size)) == model->checksum)
 		{
+
 			asprintf(&msg, "MODEL LOADED %s %08X/%08X %s", model->filename, model->checksum, checksum, model->name);
-			/*
-			 * model->obj = obj_create(model->filename);
-			else
-			{
-				asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
-				model = model_destroy(model);
-			}
-			*/
+			//model->obj = obj_create(model->filename);
 		}
 		else
 		{
 			asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
 			model = model_destroy(model);
 		}
+		/*
+		if(model->obj == NULL)
+		{
+			asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
+			model = model_destroy(model);
+		}
+		*/
 	}
 	else
 	{
