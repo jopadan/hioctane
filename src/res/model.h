@@ -26,6 +26,8 @@ typedef struct model_table_s
 /* create model_file and return it */
 model_t* model_create(FILE* file);
 model_t* model_destroy(model_t* model);
+void model_write(model_t* model, const char* file);
+
 /* create model_tabel and return it */
 model_table_t* model_table_create(char* model_info_file);
 model_table_t* model_table_destroy(model_table_t* model_table);

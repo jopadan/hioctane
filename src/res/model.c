@@ -101,20 +101,18 @@ model_t* model_create(FILE* file)
 		{
 
 			asprintf(&msg, "MODEL LOADED %s %08X/%08X %s", model->filename, model->checksum, checksum, model->name);
-			//model->obj = obj_create(model->filename);
+			model->obj = obj_create(model->filename);
 		}
 		else
 		{
 			asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
 			model = model_destroy(model);
 		}
-		/*
 		if(model->obj == NULL)
 		{
 			asprintf(&msg, "MODEL LOAD FAILED %s %08X/%08X %s", model->filename, model->checksum, checksum, name);
 			model = model_destroy(model);
 		}
-		*/
 	}
 	else
 	{
@@ -132,6 +130,10 @@ model_t* model_create(FILE* file)
 	return model;
 }
 
+void model_write(model_t* model, const char* file)
+{
+	obj_write(model->obj, file, NULL, 0);
+}
 
 model_table_t* model_table_destroy(model_table_t* mt)
 {

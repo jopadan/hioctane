@@ -1,0 +1,3 @@
+[submodule "external/obj"]
+	path = deps/obj
+	url = https://github.com/rlk/obj.git
