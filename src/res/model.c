@@ -186,6 +186,7 @@ model_table_t* model_table_create(char* model_info_file)
 
 		/* reset file pos and skip first */
 		rewind(file);
+		fprintf(stdout, "\n");
 		if(model_skip(file))
 		{
 			/* read models */

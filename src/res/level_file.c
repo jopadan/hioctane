@@ -151,7 +151,7 @@ level_table_t* level_table_create(char* level_info_file)
 	level_table_t* levels = calloc(1, sizeof(level_table_t));
 	if(levels == NULL)
 	{
-		perror("level_table_craete()");
+		perror("level_table_create()");
 		return NULL;
 	}
 

@@ -126,6 +126,7 @@ bool entity_type_table_insert(entity_type_table_t* entities, char* line, char* n
 		return false;
 	}
 
+	char *msg;
 	/* if empty fill with neutral element */
 	if(entities->num_entries == 0)
 	{
@@ -135,6 +136,57 @@ bool entity_type_table_insert(entity_type_table_t* entities, char* line, char* n
 			{
 				entities->entries[i][j] = entities->entries[type][subtype];
 			}
+		}
+		if(asprintf(&msg,"ENTITY LOADED %.02x/%.02x %.03d - %s neutral element",
+					0, 0,
+					entities->entries[0][0].type,
+					entities->entries[0][0].name) == -1)
+		{
+			log_queue(logger, LOG_FILES, "ENTITY LOAD FAILED calling asprintf!");
+			log_flush(logger);
+			free(msg);
+			return NULL;
+		}
+
+		log_queue(logger, LOG_FILES, msg);
+		log_flush(logger);
+		free(msg);
+	}
+	else
+	{
+		if(entities->entries[type][subtype].type != entities->entries[0][0].type)
+		{
+			if(asprintf(&msg,"ENTITY LOADED %.02x/%.02x %.03d - %s", 
+						type, subtype, 
+						entities->entries[type][subtype].type,
+						entities->entries[type][subtype].name) == -1)
+			{
+				log_queue(logger, LOG_FILES, "ENTITY LOAD FAILED calling asprintf!");
+				log_flush(logger);
+				free(msg);
+				return NULL;
+			}
+
+			log_queue(logger, LOG_FILES, msg);
+			log_flush(logger);
+			free(msg);
+		}
+		else if(type == 0 && subtype == 0)
+		{
+			if(asprintf(&msg,"ENTITY LOADED %.02x/%.02x %.03d - %s neutral element",
+						0, 0,
+						entities->entries[type][subtype].type,
+						entities->entries[type][subtype].name) == -1)
+			{
+				log_queue(logger, LOG_FILES, "ENTITY LOAD FAILED calling asprintf!");
+				log_flush(logger);
+				free(msg);
+				return NULL;
+			}
+
+			log_queue(logger, LOG_FILES, msg);
+			log_flush(logger);
+			free(msg);
 		}
 	}
 	entities->num_entries++;
@@ -220,6 +272,7 @@ entity_type_table_t* entity_type_table_create(char* entity_info_file)
 		entities->entries[i] = calloc(entities->SUBTYPE_SIZE, sizeof(entity_entry_t));
 	}
 
+	size_t count = 0;
 	/* get entries in entity_info_file */
 	while(getline(&line, &length, file) != -1)
 	{
@@ -240,13 +293,21 @@ entity_type_table_t* entity_type_table_create(char* entity_info_file)
 			entities = NULL;
 			break;
 		}
+		count++;
 	}
+
 	free(name_line);
 	free(line);
 	rewind(file);
 
 	fclose(file);
 	chdir(cwd);
+
+	char* msg;
+	asprintf(&msg, "ENTITY CONFIG LOADED %s with %zu entries", entity_info_file, count);
+	log_queue(logger, LOG_FILES, msg);
+	log_flush(logger);
+	free(msg);
 
 	return entities;
 }

@@ -24,9 +24,6 @@ bool main_init()
 		exit_status = EXIT_FAILURE;
 	}
 
-	/* print loaded entities to stdout */
-	entity_type_table_print();
-
 	model_table = model_table_create("models.cfg");
 	if(model_table == NULL)
 	{

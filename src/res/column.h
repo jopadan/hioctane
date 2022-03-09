@@ -63,7 +63,9 @@ typedef struct column_model_s
 	bool destroy_on_morph;
 	bool hidden;
 } column_model_t;
+
 bool column_print(column_t* column);
+
 //column_t* column_create(uint8_t* data);
 //bool column_destroy(column_t* column);
 #endif
