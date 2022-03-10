@@ -1,6 +1,0 @@
-[submodule "external/obj"]
-	path = deps/obj
-	url = https://github.com/rlk/obj.git
-[submodule "external/fast_obj"]
-	path = deps/fast_obj
-	url = https://github.com/thisistherk/fast_obj.git
