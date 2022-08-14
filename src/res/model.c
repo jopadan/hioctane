@@ -206,7 +206,7 @@ model_table_t* model_table_create(char* model_info_file)
 			asprintf(&msg, "MODEL CONFIG LOAD FAILED %s", model_info_file);
 		}
 		if(mt)
-			asprintf(&msg, "MODEL CONFIG LOADED %s", model_info_file);
+			asprintf(&msg, "MODEL CONFIG LOADED %s with %zu entries", model_info_file, mt->num_models);
 	}
 	else
 	{

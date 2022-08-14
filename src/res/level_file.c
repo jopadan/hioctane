@@ -244,6 +244,15 @@ level_table_t* level_table_create(char* level_info_file)
 		}
 	}
 
+	if(levels)
+	{
+		char* msg;
+		asprintf(&msg, "MAP CONFIG LOADED %s with %zu entries\n", level_info_file, levels->num_maps);
+		log_queue(logger, LOG_FILES, msg);
+		log_flush(logger);
+		free(msg);
+	}
+
 	fclose(file);
 	chdir(cwd);
 
