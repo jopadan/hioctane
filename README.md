@@ -1,10 +1,10 @@
 # hioctane
-Hi-Octane port in C
+[Hi-Octane](https://en.wikipedia.org/wiki/Hi-Octane) port in C
 
 # Dependencies
-- [libzip] (http://github.com/nih-at/libzip/)
-- [obj] (http://github.com/rlk/obj/)
-- [crc] (http://github.com/jopadan/crc)
+- [libzip](http://github.com/nih-at/libzip/)
+- [obj](http://github.com/rlk/obj/)
+- [crc](http://github.com/jopadan/crc)
 
 # Building
 
