@@ -8,7 +8,7 @@
 # Dependencies
 - [libzip](http://github.com/nih-at/libzip/)
 - [obj](http://github.com/rlk/obj/)
-- [crc](http://github.com/jopadan/crc)
+- [log](http://github.com/jopadan/log)
 
 # Building
 
