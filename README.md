@@ -1,9 +1,11 @@
 # hioctane
 [Hi-Octane](https://en.wikipedia.org/wiki/Hi-Octane) port in C based on
 
+
 - [HiOctaneTools](https://github.com/movAX13h/HiOctaneTools)
+- [HiOctaneBullfrog](https://github.com/aybe/HiOctaneBullfrog)
 - [moddingwiki](https://moddingwiki.shikadi.net/wiki/Hi_Octane)
-- [Debug symbols from the PSX release](https://github.com/RetroReversing/retroReversing/blob/779ab5297c1e5501a4e563e801dfd0724acc1536/pages/ps1/PS1Symbols.md?plain=1#L59) 
+- [Debug symbols from the PSX release](https://github.com/RetroReversing/retroReversing/blob/779ab5297c1e5501a4e563e801dfd0724acc1536/pages/ps1/PS1Symbols.md?plain=1#L59)
 
 # Dependencies
 - [libzip](http://github.com/nih-at/libzip/)
